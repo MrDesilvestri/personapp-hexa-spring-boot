@@ -4,7 +4,10 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import co.edu.javeriana.as.personapp.common.exceptions.InvalidOptionException;
+import co.edu.javeriana.as.personapp.common.exceptions.NoExistException;
+import co.edu.javeriana.as.personapp.mariadb.entity.PersonaEntity;
 import co.edu.javeriana.as.personapp.terminal.adapter.PersonaInputAdapterCli;
+import co.edu.javeriana.as.personapp.terminal.model.PersonaModelCli;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -16,9 +19,12 @@ public class PersonaMenu {
 
 	private static final int OPCION_REGRESAR_MOTOR_PERSISTENCIA = 0;
 	private static final int OPCION_VER_TODO = 1;
+	private static final int OPCION_CREAR = 2;
+	private static final int OPCION_ELIMINAR = 3;
+	private static final int OPCION_ACTUALIZAR = 4;
 	// mas opciones
 
-	public void iniciarMenu(PersonaInputAdapterCli personaInputAdapterCli, Scanner keyboard) {
+	public void iniciarMenu(PersonaInputAdapterCli personaInputAdapterCli, Scanner keyboard) throws NoExistException {
 		boolean isValid = false;
 		do {
 			try {
@@ -45,7 +51,8 @@ public class PersonaMenu {
 		} while (!isValid);
 	}
 
-	private void menuOpciones(PersonaInputAdapterCli personaInputAdapterCli, Scanner keyboard) {
+	private void menuOpciones(PersonaInputAdapterCli personaInputAdapterCli, Scanner keyboard) throws NoExistException {
+		PersonaModelCli persona = new PersonaModelCli();
 		boolean isValid = false;
 		do {
 			try {
@@ -58,7 +65,36 @@ public class PersonaMenu {
 				case OPCION_VER_TODO:
 					personaInputAdapterCli.historial();					
 					break;
-				// mas opciones
+				case OPCION_CREAR:
+					/*
+					 private Integer cc;
+						private String nombre;
+						private String apellido;
+						private String genero;
+						private Integer edad;
+					 */
+					System.out.print("Ingrese el número de cédula: ");
+					persona.setCc(keyboard.nextInt());
+					System.out.print("Ingrese el nombre: ");
+					persona.setNombre(keyboard.next());
+					System.out.print("Ingrese el apellido: ");
+					persona.setApellido(keyboard.next());
+					System.out.print("Ingrese el género, valores aceptados MALE, FEMALE, OTHER: ");
+					persona.setGenero(keyboard.next());
+					System.out.print("Ingrese la edad: ");
+					persona.setEdad(keyboard.nextInt());
+
+					System.out.println(persona.toString());
+
+					personaInputAdapterCli.crearPersona(persona);
+					break;
+				case OPCION_ELIMINAR:
+					
+					personaInputAdapterCli.eliminarPersona(null);
+					break;	
+				case OPCION_ACTUALIZAR:
+					personaInputAdapterCli.actualizarPersona(null, null);
+					break;
 				default:
 					log.warn("La opción elegida no es válida.");
 				}
@@ -71,6 +107,9 @@ public class PersonaMenu {
 	private void mostrarMenuOpciones() {
 		System.out.println("----------------------");
 		System.out.println(OPCION_VER_TODO + " para ver todas las personas");
+		System.out.println(OPCION_CREAR + " para crear persona");
+		System.out.println(OPCION_ELIMINAR + " para eliminar persona");
+		System.out.println(OPCION_ELIMINAR + " para actualizar persona");
 		// implementar otras opciones
 		System.out.println(OPCION_REGRESAR_MOTOR_PERSISTENCIA + " para regresar");
 	}

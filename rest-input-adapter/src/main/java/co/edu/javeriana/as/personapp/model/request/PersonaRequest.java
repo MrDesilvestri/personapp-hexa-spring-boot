@@ -3,6 +3,7 @@ package co.edu.javeriana.as.personapp.model.request;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
@@ -14,4 +15,8 @@ public class PersonaRequest {
 	private String age;
 	private String sex;
 	private String database;
+
+	
 }
+
+

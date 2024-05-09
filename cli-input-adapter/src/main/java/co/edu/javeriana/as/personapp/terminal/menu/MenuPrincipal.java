@@ -6,6 +6,7 @@ import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import co.edu.javeriana.as.personapp.common.exceptions.NoExistException;
 import co.edu.javeriana.as.personapp.terminal.adapter.PersonaInputAdapterCli;
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,7 +33,7 @@ public class MenuPrincipal {
         this.keyboard = new Scanner(System.in);
     }
 
-	public void inicio() {
+	public void inicio() throws NoExistException {
 		
 		//personaMenu = new PersonaMenu(personaInputAdapterCli);
 		boolean isValid = false;
