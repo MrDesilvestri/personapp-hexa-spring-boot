@@ -89,11 +89,22 @@ public class PersonaMenu {
 					personaInputAdapterCli.crearPersona(persona);
 					break;
 				case OPCION_ELIMINAR:
-					
-					personaInputAdapterCli.eliminarPersona(null);
+					System.out.print("Ingrese el número de cédula: ");
+					personaInputAdapterCli.eliminarPersona(keyboard.nextInt());
 					break;	
 				case OPCION_ACTUALIZAR:
-					personaInputAdapterCli.actualizarPersona(null, null);
+					System.out.print("Ingrese el número de cédula de la pesona que desea actualizar la informacion: ");
+					persona.setCc(keyboard.nextInt());
+					System.out.print("Ingrese el nombre: ");
+					persona.setNombre(keyboard.next());
+					System.out.print("Ingrese el apellido: ");
+					persona.setApellido(keyboard.next());
+					System.out.print("Ingrese el género, valores aceptados MALE, FEMALE, OTHER: ");
+					persona.setGenero(keyboard.next());
+					System.out.print("Ingrese la edad: ");
+					persona.setEdad(keyboard.nextInt());
+
+					personaInputAdapterCli.actualizarPersona(persona.getCc(), persona);
 					break;
 				default:
 					log.warn("La opción elegida no es válida.");
@@ -109,7 +120,7 @@ public class PersonaMenu {
 		System.out.println(OPCION_VER_TODO + " para ver todas las personas");
 		System.out.println(OPCION_CREAR + " para crear persona");
 		System.out.println(OPCION_ELIMINAR + " para eliminar persona");
-		System.out.println(OPCION_ELIMINAR + " para actualizar persona");
+		System.out.println(OPCION_ACTUALIZAR + " para actualizar persona");
 		// implementar otras opciones
 		System.out.println(OPCION_REGRESAR_MOTOR_PERSISTENCIA + " para regresar");
 	}
