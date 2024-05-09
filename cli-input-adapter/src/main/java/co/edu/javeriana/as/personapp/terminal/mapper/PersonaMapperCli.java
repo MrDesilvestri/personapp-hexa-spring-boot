@@ -16,4 +16,16 @@ public class PersonaMapperCli {
 		personaModelCli.setEdad(person.getAge());
 		return personaModelCli;
 	}
+
+	public Person fromAdapterCliToDomain(PersonaModelCli personaModelCli) {
+		Person person = new Person();
+		person.setIdentification(personaModelCli.getCc());
+		person.setFirstName(personaModelCli.getNombre());
+		person.setLastName(personaModelCli.getApellido());
+		person.setGender(person.mapeoGenero(personaModelCli.getGenero()));
+		person.setAge(personaModelCli.getEdad());
+		return person;
+	}
+	
+	
 }

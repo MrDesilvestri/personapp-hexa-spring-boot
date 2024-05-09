@@ -1,5 +1,6 @@
 package co.edu.javeriana.as.personapp.model.response;
 
+import co.edu.javeriana.as.personapp.mariadb.entity.PersonaEntity;
 import co.edu.javeriana.as.personapp.model.request.PersonaRequest;
 
 public class PersonaResponse extends PersonaRequest{

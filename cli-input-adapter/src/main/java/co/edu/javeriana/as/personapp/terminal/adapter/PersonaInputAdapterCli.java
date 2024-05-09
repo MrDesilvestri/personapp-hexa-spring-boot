@@ -11,6 +11,7 @@ import co.edu.javeriana.as.personapp.application.port.out.PersonOutputPort;
 import co.edu.javeriana.as.personapp.application.usecase.PersonUseCase;
 import co.edu.javeriana.as.personapp.common.annotations.Adapter;
 import co.edu.javeriana.as.personapp.common.exceptions.InvalidOptionException;
+import co.edu.javeriana.as.personapp.common.exceptions.NoExistException;
 import co.edu.javeriana.as.personapp.common.setup.DatabaseOption;
 import co.edu.javeriana.as.personapp.terminal.mapper.PersonaMapperCli;
 import co.edu.javeriana.as.personapp.terminal.model.PersonaModelCli;
@@ -55,5 +56,18 @@ public class PersonaInputAdapterCli {
 	        .map(personaMapperCli::fromDomainToAdapterCli)
 	        .forEach(System.out::println);
 	}
-
+	
+	public void crearPersona(PersonaModelCli persona) {
+		log.info("Into crearPersona PersonaEntity in Input Adapter");
+		personInputPort.create(personaMapperCli.fromAdapterCliToDomain(persona));
+	}
+	public void eliminarPersona(Integer id) throws NoExistException {
+		log.info("Into eliminarPersona PersonaEntity in Input Adapter");
+		personInputPort.drop(id);
+	}
+	public void actualizarPersona(Integer id, PersonaModelCli persona) throws NoExistException {
+		log.info("Into actualizarPersona PersonaEntity in Input Adapter");
+		personInputPort.edit(id, personaMapperCli.fromAdapterCliToDomain(persona));
+	}
+	
 }

@@ -31,4 +31,17 @@ public class Person {
 	public Boolean isValidAge() {
 		return this.age >= 0;
 	}
+
+	public Gender mapeoGenero(String genero) {
+		switch(genero) {
+			case "MALE":
+				return  Gender.MALE;
+			case "FEMALE":
+				return Gender.FEMALE;
+				case "OTHER":
+				return Gender.OTHER;
+			default:
+				throw new IllegalArgumentException("Género inválido: . Los valores válidos son: MALE, FEMALE, OTHER.");
+		}
+	}
 }

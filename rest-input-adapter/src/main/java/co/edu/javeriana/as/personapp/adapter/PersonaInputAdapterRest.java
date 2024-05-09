@@ -16,6 +16,8 @@ import co.edu.javeriana.as.personapp.common.setup.DatabaseOption;
 import co.edu.javeriana.as.personapp.domain.Gender;
 import co.edu.javeriana.as.personapp.domain.Person;
 import co.edu.javeriana.as.personapp.mapper.PersonaMapperRest;
+import co.edu.javeriana.as.personapp.mariadb.entity.PersonaEntity;
+import co.edu.javeriana.as.personapp.mariadb.repository.PersonaRepositoryMaria;
 import co.edu.javeriana.as.personapp.model.request.PersonaRequest;
 import co.edu.javeriana.as.personapp.model.response.PersonaResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +36,9 @@ public class PersonaInputAdapterRest {
 
 	@Autowired
 	private PersonaMapperRest personaMapperRest;
+
+	@Autowired
+	private PersonaRepositoryMaria personaRepositoryMaria;
 
 	PersonInputPort personInputPort;
 
@@ -77,5 +82,47 @@ public class PersonaInputAdapterRest {
 		}
 		return null;
 	}
+
+    public PersonaResponse actualizarPersona(Integer cc, PersonaRequest request) {
+        // Buscar la persona existente por su CC
+        PersonaEntity persona = personaRepositoryMaria.findById(cc)
+            .orElseThrow(() -> new RuntimeException("Persona no encontrada con CC: " + cc));
+
+        // Actualizar los campos de la entidad Persona
+        persona.setNombre(request.getFirstName());
+        persona.setApellido(request.getLastName());
+        persona.setGenero(request.getSex().charAt(0));
+        try {
+            persona.setEdad(Integer.parseInt(request.getAge()));  // Convertir la edad de String a Integer
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Formato de edad inválido");
+        }
+
+        // Guardar los cambios en la base de datos
+        persona = personaRepositoryMaria.save(persona);
+
+        // Crear y retornar un objeto PersonaResponse
+        PersonaResponse response = new PersonaResponse(
+            persona.getCc().toString(),
+            persona.getNombre(),
+            persona.getApellido(),
+            persona.getEdad().toString(),
+            persona.getGenero().toString(),
+            request.getDatabase(),
+            "Updated"
+        );
+
+        return response;
+    }
+
+	public void eliminarPersona(Integer cc) {
+		// Buscar la persona existente por su CC
+		PersonaEntity persona = personaRepositoryMaria.findById(cc)
+			.orElseThrow(() -> new RuntimeException("Persona no encontrada con CC: " + cc));
+
+		// Eliminar la persona de la base de datos
+		personaRepositoryMaria.delete(persona);
+	}
+
 
 }
