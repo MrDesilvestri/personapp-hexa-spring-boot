@@ -13,6 +13,7 @@ import co.edu.javeriana.as.personapp.common.annotations.Adapter;
 import co.edu.javeriana.as.personapp.common.exceptions.InvalidOptionException;
 import co.edu.javeriana.as.personapp.common.exceptions.NoExistException;
 import co.edu.javeriana.as.personapp.common.setup.DatabaseOption;
+import co.edu.javeriana.as.personapp.domain.Person;
 import co.edu.javeriana.as.personapp.terminal.mapper.PersonaMapperCli;
 import co.edu.javeriana.as.personapp.terminal.model.PersonaModelCli;
 import lombok.extern.slf4j.Slf4j;
@@ -68,6 +69,11 @@ public class PersonaInputAdapterCli {
 	public void actualizarPersona(Integer id, PersonaModelCli persona) throws NoExistException {
 		log.info("Into actualizarPersona PersonaEntity in Input Adapter");
 		personInputPort.edit(id, personaMapperCli.fromAdapterCliToDomain(persona));
+	}
+
+	public PersonaModelCli obtenerPersona(Integer id) throws NoExistException {
+		log.info("Into obtenerPersona PersonaEntity in Input Adapter");
+		return personaMapperCli.fromDomainToAdapterCli(personInputPort.findOne(id));
 	}
 	
 }

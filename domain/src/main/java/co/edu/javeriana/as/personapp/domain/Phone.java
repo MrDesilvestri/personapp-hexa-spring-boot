@@ -15,4 +15,8 @@ public class Phone {
 	private String company;
 	@NonNull
 	private Person owner;
+
+	public Integer numeroTraducido(){
+		return Integer.parseInt(this.number);
+	}
 }
