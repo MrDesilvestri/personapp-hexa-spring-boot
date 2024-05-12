@@ -88,4 +88,48 @@ public class PersonaMapperMaria {
 				.map(telefono -> telefonoMapperMaria.fromAdapterToDomain(telefono)).collect(Collectors.toList())
 				: new ArrayList<Phone>();
 	}
+
+	public PersonaEntity fromDomainToEntity(Person person) {
+        PersonaEntity entity = new PersonaEntity();
+        entity.setCc(person.getIdentification());
+        entity.setNombre(person.getFirstName());
+        entity.setApellido(person.getLastName());
+        entity.setGenero(convertGenderToChar(person.getGender()));
+        entity.setEdad(person.getAge());
+		entity.setEstudios(validateEstudios(person.getStudies()));
+		entity.setTelefonos(validateTelefonos(person.getPhoneNumbers()));
+        return entity;
+    }
+
+	public Person fromEntityToDomain(PersonaEntity entity) {
+        Person person = new Person();
+        person.setIdentification(entity.getCc());
+        person.setFirstName(entity.getNombre());
+        person.setLastName(entity.getApellido());
+        person.setGender(convertCharToGender(entity.getGenero()));
+        person.setAge(entity.getEdad());
+        person.setStudies(validateStudies(entity.getEstudios()));
+    	person.setTelefonos(validatePhones(entity.getTelefonos()));
+		return person;
+	}
+
+	private Character convertGenderToChar(Gender gender) {
+        if (gender == null) return null;
+        switch (gender) {
+            case MALE: return 'M';
+            case FEMALE: return 'F';
+            case OTHER: return 'O';
+            default: throw new IllegalArgumentException("Unknown Gender");
+        }
+    }
+
+    private Gender convertCharToGender(Character character) {
+        if (character == null) return null;
+        switch (character) {
+            case 'M': return Gender.MALE;
+            case 'F': return Gender.FEMALE;
+            case 'O': return Gender.OTHER;
+            default: throw new IllegalArgumentException("Unknown Gender Character");
+        }
+    }
 }

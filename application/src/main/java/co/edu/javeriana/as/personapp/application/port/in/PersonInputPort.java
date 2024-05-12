@@ -24,6 +24,8 @@ public interface PersonInputPort {
 
 	public Person findOne(Integer identification) throws NoExistException;
 
+	public Person findById(Integer identification);
+
 	public Integer count();
 
 	public List<Phone> getPhones(Integer identification) throws NoExistException;

@@ -32,6 +32,15 @@ public class Person {
 		return this.age >= 0;
 	}
 
+	public List<Phone> getTelefonos() {
+        return phoneNumbers;
+    }
+
+    public void setTelefonos(List<Phone> telefonos) {
+        this.phoneNumbers = telefonos;
+    }
+
+
 	public Gender mapeoGenero(String genero) {
 		switch(genero) {
 			case "MALE":

@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 import co.edu.javeriana.as.personapp.common.exceptions.InvalidOptionException;
 import co.edu.javeriana.as.personapp.common.exceptions.NoExistException;
-import co.edu.javeriana.as.personapp.mariadb.entity.PersonaEntity;
 import co.edu.javeriana.as.personapp.terminal.adapter.PersonaInputAdapterCli;
 import co.edu.javeriana.as.personapp.terminal.model.PersonaModelCli;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +21,7 @@ public class PersonaMenu {
 	private static final int OPCION_CREAR = 2;
 	private static final int OPCION_ELIMINAR = 3;
 	private static final int OPCION_ACTUALIZAR = 4;
+	private static final int OPCION_OBTENER_PERSONA = 5;
 	// mas opciones
 
 	public void iniciarMenu(PersonaInputAdapterCli personaInputAdapterCli, Scanner keyboard) throws NoExistException {
@@ -99,6 +99,15 @@ public class PersonaMenu {
 
 					personaInputAdapterCli.actualizarPersona(persona.getCc(), persona);
 					break;
+				case OPCION_OBTENER_PERSONA:
+					System.out.print("Ingrese el número de cédula: ");
+					try{
+						persona.setCc(keyboard.nextInt());
+					}catch (Exception e) {
+						log.warn("Solo se permiten números.");
+					}
+					personaInputAdapterCli.RbuscarPersonaPorCC(persona.getCc());
+					break;
 				default:
 					log.warn("La opción elegida no es válida.");
 				}
@@ -114,6 +123,7 @@ public class PersonaMenu {
 		System.out.println(OPCION_CREAR + " para crear persona");
 		System.out.println(OPCION_ELIMINAR + " para eliminar persona");
 		System.out.println(OPCION_ACTUALIZAR + " para actualizar persona");
+		System.out.println(OPCION_OBTENER_PERSONA + " para obtener una persona");
 		// implementar otras opciones
 		System.out.println(OPCION_REGRESAR_MOTOR_PERSISTENCIA + " para regresar");
 	}

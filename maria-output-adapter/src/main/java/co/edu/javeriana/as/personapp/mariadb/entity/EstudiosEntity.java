@@ -56,8 +56,8 @@ public class EstudiosEntity implements Serializable {
 		return estudiosEntityPK;
 	}
 
-	public void setEstudiosPK(EstudiosEntityPK estudiosEntityPK) {
-		this.estudiosEntityPK = estudiosEntityPK;
+	public void setEstudiosPK(EstudiosEntityPK estudiosEntityPK2) {
+		this.estudiosEntityPK = estudiosEntityPK2;
 	}
 
 	public Date getFecha() {
@@ -117,5 +117,15 @@ public class EstudiosEntity implements Serializable {
 	public String toString() {
 		return "EstudiosEntity [estudiosEntityPK=" + estudiosEntityPK + ", fecha=" + fecha + ", univer=" + univer + "]";
 	}
+
+    public Object getTitulo() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getTitulo'");
+    }
+
+    public Object getInstitucion() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getInstitucion'");
+    }
 
 }

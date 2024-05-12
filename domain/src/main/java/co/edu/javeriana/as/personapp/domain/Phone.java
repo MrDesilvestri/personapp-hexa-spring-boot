@@ -10,13 +10,13 @@ import lombok.NonNull;
 @AllArgsConstructor
 public class Phone {
 	@NonNull
-	private String number;
+	private Integer number;
 	@NonNull
 	private String company;
 	@NonNull
 	private Person owner;
 
 	public Integer numeroTraducido(){
-		return Integer.parseInt(this.number);
+		return this.number;
 	}
 }

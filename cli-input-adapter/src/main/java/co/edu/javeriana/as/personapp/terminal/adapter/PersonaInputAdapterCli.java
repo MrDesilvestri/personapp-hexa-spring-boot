@@ -3,8 +3,11 @@ package co.edu.javeriana.as.personapp.terminal.adapter;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.NoResultException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.DataAccessException;
 
 import co.edu.javeriana.as.personapp.application.port.in.PersonInputPort;
 import co.edu.javeriana.as.personapp.application.port.out.PersonOutputPort;
@@ -33,6 +36,7 @@ public class PersonaInputAdapterCli {
 	@Autowired
 	private PersonaMapperCli personaMapperCli;
 
+	@Autowired
 	PersonInputPort personInputPort;
 
 	public void setPersonOutputPortInjection(String dbOption) throws InvalidOptionException {
@@ -71,9 +75,35 @@ public class PersonaInputAdapterCli {
 		personInputPort.edit(id, personaMapperCli.fromAdapterCliToDomain(persona));
 	}
 
-	public PersonaModelCli obtenerPersona(Integer id) throws NoExistException {
-		log.info("Into obtenerPersona PersonaEntity in Input Adapter");
-		return personaMapperCli.fromDomainToAdapterCli(personInputPort.findOne(id));
+	public void buscarPersonaPorCC(Integer cc) {
+		try {
+			Person person = personInputPort.findById(cc);
+			if (person != null) {
+				PersonaModelCli personaCli = personaMapperCli.fromDomainToAdapterCli(person);
+				System.out.println(personaCli.toString());
+			} else {
+				System.out.println("Persona no encontrada con CC: " + cc);
+			}
+		} catch (Exception e) {
+			log.error("Error al buscar la persona: " + e.getMessage());
+		}
+	}
+
+	public PersonaModelCli RbuscarPersonaPorCC(Integer cc) throws NoExistException {
+		try {
+			Person person = personInputPort.findById(cc);
+			if (person != null) {
+				PersonaModelCli personaCli = personaMapperCli.fromDomainToAdapterCli(person);
+				System.out.println(personaCli.toString());
+				return personaCli;
+			} else {
+				System.out.println("Persona no encontrada con CC: " + cc);
+				return null;
+			}
+		} catch (Exception e) {
+			log.error("Error al buscar la persona: " + e.getMessage());
+		}
+		return null;
 	}
 	
 }

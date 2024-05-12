@@ -26,7 +26,7 @@ public class TelefonoEntity implements Serializable {
 	@Id
 	@Basic(optional = false)
 	@Column(nullable = false, length = 15)
-	private String num;
+	private Integer num;
 	@Basic(optional = false)
 	@Column(nullable = false, length = 45)
 	private String oper;
@@ -37,20 +37,20 @@ public class TelefonoEntity implements Serializable {
 	public TelefonoEntity() {
 	}
 
-	public TelefonoEntity(String num) {
+	public TelefonoEntity(Integer num) {
 		this.num = num;
 	}
 
-	public TelefonoEntity(String num, String oper) {
+	public TelefonoEntity(Integer num, String oper) {
 		this.num = num;
 		this.oper = oper;
 	}
 
-	public String getNum() {
+	public Integer getNum() {
 		return num;
 	}
 
-	public void setNum(String num) {
+	public void setNum(Integer num) {
 		this.num = num;
 	}
 

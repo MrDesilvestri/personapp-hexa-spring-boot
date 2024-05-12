@@ -57,4 +57,5 @@ public class EstudiosMapperMaria {
 	private String validateUniversityName(String univer) {
 		return univer != null ? univer : "";
 	}
+
 }

@@ -25,12 +25,13 @@ public class PhoneUseCase implements PhoneInputPort{
 
     //public Phone findOne(Integer identification) throws NoExistException;
     @Override
-	public Phone findOne(Integer identification) throws NoExistException {
-		Phone oldPhone = phonePersintence.findById(identification);
-		if (oldPhone != null)
-			return oldPhone;
-        throw new NoExistException("El telefono con id " + identification + " no existe en la base de datos, no se puede editar");
-	}
+    public Phone findOne(Integer identification) throws NoExistException {
+        Phone phone = phonePersintence.findById(identification);
+        if (phone == null) {
+            throw new NoExistException("El telefono con id " + identification + " no existe en la base de datos.");
+        }
+        return phone;
+    }
 
     @Override
     public Phone create(Phone phone) {
@@ -39,11 +40,12 @@ public class PhoneUseCase implements PhoneInputPort{
     }
 
     @Override
-    public Phone edit(Integer identification, Phone person) throws NoExistException {
-        Phone oldPhone = phonePersintence.findById(identification);
-        if(oldPhone != null)
-            return phonePersintence.save(person);
-        throw new NoExistException("El telefono con id " + identification + " no existe en la base de datos, no se puede editar");
+    public Phone edit(Integer identification, Phone phone) throws NoExistException {
+        Phone existingPhone = phonePersintence.findById(identification);
+        if (existingPhone == null) {
+            throw new NoExistException("El telefono con id " + identification + " no existe en la base de datos.");
+        }
+        return phonePersintence.save(phone);
     }
 
     @Override

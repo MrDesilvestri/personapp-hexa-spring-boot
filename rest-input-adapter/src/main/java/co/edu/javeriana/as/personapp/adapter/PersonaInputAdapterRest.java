@@ -115,6 +115,10 @@ public class PersonaInputAdapterRest {
         return response;
     }
 
+	public Person ObtenerPorID(Integer cc) {
+		return personInputPort.findById(cc);
+	}
+
 	public void eliminarPersona(Integer cc) {
 		// Buscar la persona existente por su CC
 		PersonaEntity persona = personaRepositoryMaria.findById(cc)
@@ -123,6 +127,8 @@ public class PersonaInputAdapterRest {
 		// Eliminar la persona de la base de datos
 		personaRepositoryMaria.delete(persona);
 	}
+
+	
 
 
 }

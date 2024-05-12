@@ -34,7 +34,7 @@ public class TelefonoInputAdapterCli {
 
     @Autowired
     private TelefonoMapperCli phoneMapperCli;
-
+    @Autowired
 	private PhoneInputPort phoneInputPort;
 
     public void setPhoneOutputPortInjection(String dbOption) throws InvalidOptionException {

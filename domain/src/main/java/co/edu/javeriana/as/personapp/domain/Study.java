@@ -19,4 +19,14 @@ public class Study {
 	private Profession profession;
 	private LocalDate graduationDate;
 	private String universityName;
+
+    public LocalDate getInstitution() {
+        return this.graduationDate;
+    }
+    public Object getTitle() {
+        return this.profession.getName();
+    }
+    public Object getId() {
+        return this.person.getIdentification();
+    }
 }

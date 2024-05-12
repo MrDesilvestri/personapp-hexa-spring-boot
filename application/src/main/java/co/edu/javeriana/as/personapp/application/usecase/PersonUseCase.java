@@ -89,4 +89,13 @@ public class PersonUseCase implements PersonInputPort {
 		throw new NoExistException(
 				"The person with id " + identification + " does not exist into db, cannot be getting studies");
 	}
+
+	@Override
+	public Person findById(Integer identification) {
+		try {
+			return personPersintence.findById(identification);
+		} catch (Exception e) {
+		throw new UnsupportedOperationException("Unimplemented method 'findById'");
+		}
+	}
 }

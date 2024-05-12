@@ -16,31 +16,27 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 public class PhoneOutputAdapterMaria implements PhoneOutputPort{
     @Autowired
-    private TelefonoRepositoryMaria phoneRepositoryMaria;
-
+    private TelefonoRepositoryMaria repo;
     @Autowired
-    private TelefonoMapperMaria telefonoMapperMaria;
+    private TelefonoMapperMaria mapper;
 
     @Override
     public Phone save(Phone phone) {
-        log.debug("Into save on Adapter MariaDB");
-        TelefonoEntity persistedPhone = phoneRepositoryMaria.save(telefonoMapperMaria.fromDomainToAdapter(phone));
-        return telefonoMapperMaria.fromAdapterToDomain(persistedPhone);
+        TelefonoEntity entity = mapper.fromDomainToAdapter(phone);
+        entity = repo.save(entity);
+        return mapper.fromAdapterToDomain(entity);
     }
 
     @Override
-    public Boolean delete(Integer numero) {
-        log.debug("Into delete on Adapter MariaDB");
-        phoneRepositoryMaria.deleteById(numero.toString());
-        return phoneRepositoryMaria.findById(numero.toString()).isEmpty();
+    public Boolean delete(Integer num) {
+        repo.deleteById(num);
+        return !repo.existsById(num);
     }
 
     @Override
-    public Phone findById(Integer numero) {
-        log.debug("Into findById on Adapter MariaDB");
-        if(phoneRepositoryMaria.findById(numero.toString()).isEmpty()){
-            return null;
-        }
-        return telefonoMapperMaria.fromAdapterToDomain(phoneRepositoryMaria.findById(numero.toString()).get());
+    public Phone findById(Integer num) {
+        return repo.findById(num)
+                   .map(mapper::fromAdapterToDomain)
+                   .orElse(null);
     }
 }
