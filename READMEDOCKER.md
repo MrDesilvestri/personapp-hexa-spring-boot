@@ -4,7 +4,7 @@
   * o ejecute el siguiente comando en el cmd:
      * docker pull mariadb:latest 
 3. Ejecutar el siguiente comando en el CMD:
-    * docker run --name mariadbc -p3307:3306 -e MARIADB_ROOT_PASSWORD=1234 -e MYSQL_USER=persona_db -e MYSQL_PASSWORD=persona_db -e MYSQL_DATABASE=lab -d mariadb:latest
+    * docker run --name mariadbc -p3307:3306 -e MARIADB_ROOT_PASSWORD=1234 -e MYSQL_USER=persona_db -e MYSQL_PASSWORD=persona_db -e MYSQL_DATABASE=persona_db -d mariadb:latest
 4. Actualizar el linux de la imagen:
   * ejecute el siguente comando en el cmd para poder entrar al conenedor:
     * docker exec -it mariadbc bash
@@ -17,6 +17,47 @@
   * docker run --name phplab -d -p8080:80 --link mariadbc:db -e PMA_PORT=3307 phpmyadmin
 7. abrir en el navegador de preferencia el siguiente link:
 * http://localhost:8080
+8. autenticarse en Phpmyadmin con las siguientes credenciales:
+   * Usuario: persona_db
+   * Contraseña: persona_db
+9. pegar en la ventana SQL de la base de datos el siguiente codigo SQL:
+```sql
+-- Creación de la tabla profesion
+CREATE TABLE profesion (
+    id INT(6) PRIMARY KEY,
+    nom VARCHAR(90),
+    des TEXT
+);
+
+-- Creación de la tabla persona
+CREATE TABLE persona (
+    cc INT(15) PRIMARY KEY,
+    nombre VARCHAR(45),
+    apellido VARCHAR(45),
+    genero ENUM('M','F'),
+    edad INT(3)
+);
+
+-- Creación de la tabla estudios
+CREATE TABLE estudios (
+    id_prof INT(6),
+    cc_per INT(15),
+    fecha DATE,
+    univer VARCHAR(50),
+    PRIMARY KEY (id_prof, cc_per),
+    FOREIGN KEY (id_prof) REFERENCES profesion(id),
+    FOREIGN KEY (cc_per) REFERENCES persona(cc)
+);
+
+-- Creación de la tabla telefono
+CREATE TABLE telefono (
+    num VARCHAR(15),
+    oper VARCHAR(45),
+    duenio INT(15),
+    PRIMARY KEY (num),
+    FOREIGN KEY (duenio) REFERENCES persona(cc)
+);
+```
 
 **INSTALAR MARIADB EN DOCKER:**
 1. Realizar la busqueda o descarga de la imagen con el mismo procedimeinto realizado para MariaDB:
