@@ -1,22 +1,20 @@
 package co.edu.javeriana.as.personapp.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
+@Builder
 public class Phone {
 	@NonNull
-	private Integer number;
+	private String number;
 	@NonNull
 	private String company;
 	@NonNull
+	private Integer duenio;
+	@NonNull
 	private Person owner;
-
-	public Integer numeroTraducido(){
-		return this.number;
-	}
 }

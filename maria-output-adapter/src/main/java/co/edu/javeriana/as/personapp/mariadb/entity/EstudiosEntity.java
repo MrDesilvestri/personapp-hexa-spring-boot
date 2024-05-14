@@ -19,7 +19,7 @@ import javax.persistence.TemporalType;
  * @author aasanchez
  */
 @Entity
-@Table(name="estudios", catalog = "persona_db", schema = "")
+@Table(name="estudios", catalog = "persona_db", schema = "persona_db")
 @NamedQueries({ @NamedQuery(name = "EstudiosEntity.findAll", query = "SELECT e FROM EstudiosEntity e"),
 		@NamedQuery(name = "EstudiosEntity.findByIdProf", query = "SELECT e FROM EstudiosEntity e WHERE e.estudiosEntityPK.idProf = :idProf"),
 		@NamedQuery(name = "EstudiosEntity.findByCcPer", query = "SELECT e FROM EstudiosEntity e WHERE e.estudiosEntityPK.ccPer = :ccPer"),

@@ -10,8 +10,13 @@ import co.edu.javeriana.as.personapp.mariadb.entity.TelefonoEntity;
 
 @Mapper
 public class TelefonoMapperMaria {
+
+	private final PersonaMapperMaria personaMapperMaria;
+
 	@Autowired
-	private PersonaMapperMaria personaMapperMaria;
+	public TelefonoMapperMaria (PersonaMapperMaria personaMapperMaria) {
+		this.personaMapperMaria = personaMapperMaria;
+	}
 
 	public TelefonoEntity fromDomainToAdapter(Phone phone) {
 		TelefonoEntity entity = new TelefonoEntity();

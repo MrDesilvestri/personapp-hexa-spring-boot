@@ -1,5 +1,8 @@
 package co.edu.javeriana.as.personapp.mariadb.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -17,6 +20,8 @@ import javax.persistence.Table;
  *
  * @author aasanchez
  */
+@Setter
+@Getter
 @Entity
 @Table(name="profesion", catalog = "persona_db", schema = "")
 @NamedQueries({ @NamedQuery(name = "ProfesionEntity.findAll", query = "SELECT p FROM ProfesionEntity p"),
@@ -50,39 +55,7 @@ public class ProfesionEntity implements Serializable {
 		this.nom = nom;
 	}
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getNom() {
-		return nom;
-	}
-
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
-
-	public String getDes() {
-		return des;
-	}
-
-	public void setDes(String des) {
-		this.des = des;
-	}
-
-	public List<EstudiosEntity> getEstudios() {
-		return estudios;
-	}
-
-	public void setEstudios(List<EstudiosEntity> estudiosList) {
-		this.estudios = estudiosList;
-	}
-
-	@Override
+    @Override
 	public int hashCode() {
 		int hash = 0;
 		hash += (id != null ? id.hashCode() : 0);

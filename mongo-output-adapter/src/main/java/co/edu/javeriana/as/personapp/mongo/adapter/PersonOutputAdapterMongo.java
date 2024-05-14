@@ -18,13 +18,17 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Adapter("personOutputAdapterMongo")
 public class PersonOutputAdapterMongo implements PersonOutputPort {
-	
+
+    private final PersonaRepositoryMongo personaRepositoryMongo;
+
+	private final PersonaMapperMongo personaMapperMongo;
+
 	@Autowired
-    private PersonaRepositoryMongo personaRepositoryMongo;
-	
-	@Autowired
-	private PersonaMapperMongo personaMapperMongo;
-	
+	public PersonOutputAdapterMongo(PersonaRepositoryMongo personaRepositoryMongo, PersonaMapperMongo personaMapperMongo) {
+		this.personaRepositoryMongo = personaRepositoryMongo;
+		this.personaMapperMongo = personaMapperMongo;
+	}
+
 	@Override
 	public Person save(Person person) {
 		log.debug("Into save on Adapter MongoDB");

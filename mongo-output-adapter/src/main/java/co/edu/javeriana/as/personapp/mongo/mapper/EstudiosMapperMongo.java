@@ -16,11 +16,15 @@ import lombok.NonNull;
 @Mapper
 public class EstudiosMapperMongo {
 
-	@Autowired
-	private PersonaMapperMongo personaMapperMongo;
+	private final PersonaMapperMongo personaMapperMongo;
+
+	private final ProfesionMapperMongo profesionMapperMongo;
 
 	@Autowired
-	private ProfesionMapperMongo profesionMapperMongo;
+	public EstudiosMapperMongo(PersonaMapperMongo personaMapperMongo, ProfesionMapperMongo profesionMapperMongo) {
+		this.personaMapperMongo = personaMapperMongo;
+		this.profesionMapperMongo = profesionMapperMongo;
+	}
 
 	public EstudiosDocument fromDomainToAdapter(Study study) {
 		EstudiosDocument estudio = new EstudiosDocument();
@@ -37,15 +41,15 @@ public class EstudiosMapperMongo {
 	}
 
 	private PersonaDocument validatePrimaryPersona(@NonNull Person person) {
-		return person != null ? personaMapperMongo.fromDomainToAdapter(person) : new PersonaDocument();
+		return personaMapperMongo.fromDomainToAdapter(person);
 	}
 
 	private ProfesionDocument validatePrimaryProfesion(@NonNull Profession profession) {
-		return profession != null ? profesionMapperMongo.fromDomainToAdapter(profession) : new ProfesionDocument();
+		return profesionMapperMongo.fromDomainToAdapter(profession);
 	}
 
 	private LocalDate validateFecha(LocalDate graduationDate) {
-		return graduationDate != null ? graduationDate : null;
+		return graduationDate;
 	}
 
 	private String validateUniver(String universityName) {
@@ -62,7 +66,7 @@ public class EstudiosMapperMongo {
 	}
 
 	private LocalDate validateGraduationDate(LocalDate fecha) {
-		return fecha != null ? fecha : null;
+		return fecha;
 	}
 
 	private String validateUniversityName(String univer) {

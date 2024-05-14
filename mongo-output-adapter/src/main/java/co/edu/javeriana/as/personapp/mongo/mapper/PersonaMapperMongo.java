@@ -19,11 +19,15 @@ import lombok.NonNull;
 @Mapper
 public class PersonaMapperMongo {
 
-	@Autowired
-	private EstudiosMapperMongo estudiosMapperMongo;
+	private final EstudiosMapperMongo estudiosMapperMongo;
+
+	private final TelefonoMapperMongo telefonoMapperMongo;
 
 	@Autowired
-	private TelefonoMapperMongo telefonoMapperMongo;
+	public PersonaMapperMongo(EstudiosMapperMongo estudiosMapperMongo, TelefonoMapperMongo telefonoMapperMongo) {
+		this.estudiosMapperMongo = estudiosMapperMongo;
+		this.telefonoMapperMongo = telefonoMapperMongo;
+	}
 
 	public PersonaDocument fromDomainToAdapter(Person person) {
 		PersonaDocument personaDocument = new PersonaDocument();
@@ -47,13 +51,13 @@ public class PersonaMapperMongo {
 
 	private List<EstudiosDocument> validateEstudios(List<Study> studies) {
 		return studies != null && !studies.isEmpty() ? studies.stream()
-				.map(study -> estudiosMapperMongo.fromDomainToAdapter(study)).collect(Collectors.toList())
+				.map(estudiosMapperMongo::fromDomainToAdapter).collect(Collectors.toList())
 				: new ArrayList<EstudiosDocument>();
 	}
 
 	private List<TelefonoDocument> validateTelefonos(List<Phone> phoneNumbers) {
 		return phoneNumbers != null && !phoneNumbers.isEmpty() ? phoneNumbers.stream()
-				.map(phone -> telefonoMapperMongo.fromDomainToAdapter(phone)).collect(Collectors.toList())
+				.map(telefonoMapperMongo::fromDomainToAdapter).collect(Collectors.toList())
 				: new ArrayList<TelefonoDocument>();
 	}
 
@@ -79,13 +83,13 @@ public class PersonaMapperMongo {
 
 	private List<Study> validateStudies(List<EstudiosDocument> estudiosDocuments) {
 		return estudiosDocuments != null && !estudiosDocuments.isEmpty() ? estudiosDocuments.stream()
-				.map(estudio -> estudiosMapperMongo.fromAdapterToDomain(estudio)).collect(Collectors.toList())
-				: new ArrayList<Study>();
+				.map(estudiosMapperMongo::fromAdapterToDomain).collect(Collectors.toList())
+				: new ArrayList<>();
 	}
 
 	private List<Phone> validatePhones(List<TelefonoDocument> telefonosDocuments) {
 		return telefonosDocuments != null && !telefonosDocuments.isEmpty() ? telefonosDocuments.stream()
-				.map(telefono -> telefonoMapperMongo.fromAdapterToDomain(telefono)).collect(Collectors.toList())
-				: new ArrayList<Phone>();
+				.map(telefonoMapperMongo::fromAdapterToDomain).collect(Collectors.toList())
+				: new ArrayList<>();
 	}
 }

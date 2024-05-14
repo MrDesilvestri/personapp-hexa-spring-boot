@@ -56,12 +56,8 @@ public class TelefonoMenu {
 
 	private void menuOpciones(PersonaInputAdapterCli personaInputAdapterCli ,TelefonoInputAdapterCli telefonoInputAdapterCli, Scanner keyboard) throws NoExistException {
 		TelefonoModelCli telefono = new TelefonoModelCli();
-        TelefonoModelCli telefonoModelCli = new TelefonoModelCli();
         PersonaModelCli persona = new PersonaModelCli();
-		Person person = new Person();
-		PersonaMapperCli personaMapperCli = new PersonaMapperCli();
-		PersonaModelCli personaModelCli = new PersonaModelCli();
-		
+
 		boolean isValid = false;
 		do {
 			try {
@@ -77,7 +73,7 @@ public class TelefonoMenu {
 					break;
 				case OPCION_CREAR:
 					System.out.print("Ingrese el número de telefono: ");
-					telefono.setNum(telefonoModelCli.numeroTraducido(keyboard.next()));
+					telefono.setNum(keyboard.next());
                     System.out.print("Ingrese el operador: ");
                     telefono.setOperador(keyboard.next());
                     System.out.print("Ingrese la cedula del dueño al que pertenece el telefono: ");
@@ -88,7 +84,7 @@ public class TelefonoMenu {
 					}
 	
 					
-					telefono.crearTelefono(telefono, persona.getCc());
+					telefonoInputAdapterCli.crearTelefono(telefono, personaInputAdapterCli.buscarPersonaPorCC(persona.getCc()));
                     
 					break;
 				case OPCION_ELIMINAR:

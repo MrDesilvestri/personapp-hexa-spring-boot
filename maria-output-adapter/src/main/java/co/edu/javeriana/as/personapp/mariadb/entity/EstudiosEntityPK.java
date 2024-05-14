@@ -1,5 +1,8 @@
 package co.edu.javeriana.as.personapp.mariadb.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -9,12 +12,11 @@ import javax.persistence.Embeddable;
  *
  * @author aasanchez
  */
+@Setter
+@Getter
 @Embeddable
 public class EstudiosEntityPK implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	@Basic(optional = false)
 	@Column(name = "id_prof", nullable = false)
@@ -31,27 +33,11 @@ public class EstudiosEntityPK implements Serializable {
 		this.ccPer = ccPer;
 	}
 
-	public int getIdProf() {
-		return idProf;
-	}
-
-	public void setIdProf(int idProf) {
-		this.idProf = idProf;
-	}
-
-	public int getCcPer() {
-		return ccPer;
-	}
-
-	public void setCcPer(int ccPer) {
-		this.ccPer = ccPer;
-	}
-
-	@Override
+    @Override
 	public int hashCode() {
 		int hash = 0;
-		hash += (int) idProf;
-		hash += (int) ccPer;
+		hash += idProf;
+		hash += ccPer;
 		return hash;
 	}
 
@@ -65,11 +51,8 @@ public class EstudiosEntityPK implements Serializable {
 		if (this.idProf != other.idProf) {
 			return false;
 		}
-		if (this.ccPer != other.ccPer) {
-			return false;
-		}
-		return true;
-	}
+        return this.ccPer == other.ccPer;
+    }
 
 	@Override
 	public String toString() {

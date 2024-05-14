@@ -106,7 +106,7 @@ public class PersonaMenu {
 					}catch (Exception e) {
 						log.warn("Solo se permiten números.");
 					}
-					personaInputAdapterCli.RbuscarPersonaPorCC(persona.getCc());
+					personaInputAdapterCli.buscarPersonaPorCC(persona.getCc());
 					break;
 				default:
 					log.warn("La opción elegida no es válida.");

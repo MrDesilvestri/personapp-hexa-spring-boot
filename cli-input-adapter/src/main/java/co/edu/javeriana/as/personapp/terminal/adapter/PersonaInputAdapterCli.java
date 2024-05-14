@@ -3,11 +3,9 @@ package co.edu.javeriana.as.personapp.terminal.adapter;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.persistence.NoResultException;
-
+import co.edu.javeriana.as.personapp.terminal.model.PersonaModelCli;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.dao.DataAccessException;
 
 import co.edu.javeriana.as.personapp.application.port.in.PersonInputPort;
 import co.edu.javeriana.as.personapp.application.port.out.PersonOutputPort;
@@ -18,7 +16,6 @@ import co.edu.javeriana.as.personapp.common.exceptions.NoExistException;
 import co.edu.javeriana.as.personapp.common.setup.DatabaseOption;
 import co.edu.javeriana.as.personapp.domain.Person;
 import co.edu.javeriana.as.personapp.terminal.mapper.PersonaMapperCli;
-import co.edu.javeriana.as.personapp.terminal.model.PersonaModelCli;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -75,27 +72,11 @@ public class PersonaInputAdapterCli {
 		personInputPort.edit(id, personaMapperCli.fromAdapterCliToDomain(persona));
 	}
 
-	public void buscarPersonaPorCC(Integer cc) {
+	public Person buscarPersonaPorCC(Integer cc) {
 		try {
 			Person person = personInputPort.findById(cc);
 			if (person != null) {
-				PersonaModelCli personaCli = personaMapperCli.fromDomainToAdapterCli(person);
-				System.out.println(personaCli.toString());
-			} else {
-				System.out.println("Persona no encontrada con CC: " + cc);
-			}
-		} catch (Exception e) {
-			log.error("Error al buscar la persona: " + e.getMessage());
-		}
-	}
-
-	public PersonaModelCli RbuscarPersonaPorCC(Integer cc) throws NoExistException {
-		try {
-			Person person = personInputPort.findById(cc);
-			if (person != null) {
-				PersonaModelCli personaCli = personaMapperCli.fromDomainToAdapterCli(person);
-				System.out.println(personaCli.toString());
-				return personaCli;
+				return person;
 			} else {
 				System.out.println("Persona no encontrada con CC: " + cc);
 				return null;

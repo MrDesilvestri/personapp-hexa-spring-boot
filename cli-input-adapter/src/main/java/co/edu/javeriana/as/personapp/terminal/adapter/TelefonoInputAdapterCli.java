@@ -1,10 +1,9 @@
 package co.edu.javeriana.as.personapp.terminal.adapter;
 
-import org.checkerframework.checker.units.qual.s;
+import co.edu.javeriana.as.personapp.terminal.model.TelefonoModelCli;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-
-
+import org.springframework.context.annotation.Lazy;
 import co.edu.javeriana.as.personapp.application.port.in.PhoneInputPort;
 import co.edu.javeriana.as.personapp.application.port.out.PhoneOutputPort;
 import co.edu.javeriana.as.personapp.application.usecase.PhoneUseCase;
@@ -15,33 +14,32 @@ import co.edu.javeriana.as.personapp.common.setup.DatabaseOption;
 import co.edu.javeriana.as.personapp.domain.Person;
 import co.edu.javeriana.as.personapp.domain.Phone;
 import co.edu.javeriana.as.personapp.terminal.mapper.TelefonoMapperCli;
-import co.edu.javeriana.as.personapp.terminal.model.TelefonoModelCli;
 import lombok.extern.slf4j.Slf4j;
-
 
 @Slf4j
 @Adapter
 public class TelefonoInputAdapterCli {
-    @Autowired
-	@Qualifier("phoneOutputAdapterMaria")
-	private PhoneOutputPort phoneOutputPortMaria;
-    /*
-     * @Autowired
-	@Qualifier("phoneOutputAdapterMongo")
-	private PhoneOutputPort phoneOutputPortMongo;
-     */
-	
+
+    @Qualifier("phoneOutputAdapterMaria")
+    @Lazy
+    private final PhoneOutputPort phoneOutputPortMaria;
+
+    private final TelefonoMapperCli phoneMapperCli;
+
+    private PhoneInputPort phoneInputPort;
 
     @Autowired
-    private TelefonoMapperCli phoneMapperCli;
-    @Autowired
-	private PhoneInputPort phoneInputPort;
+    public TelefonoInputAdapterCli(PhoneOutputPort phoneOutputPortMaria, TelefonoMapperCli phoneMapperCli, PhoneInputPort phoneInputPort) {
+        this.phoneOutputPortMaria = phoneOutputPortMaria;
+        this.phoneMapperCli = phoneMapperCli;
+        this.phoneInputPort = phoneInputPort;
+    }
 
     public void setPhoneOutputPortInjection(String dbOption) throws InvalidOptionException {
         if (dbOption.equalsIgnoreCase(DatabaseOption.MARIA.toString())) {
             phoneInputPort = new PhoneUseCase(phoneOutputPortMaria);
         } else if (dbOption.equalsIgnoreCase(DatabaseOption.MONGO.toString())) {
-            //phoneInputPort = new PhoneUseCase(phoneOutputPortMongo);
+            // phoneInputPort = new PhoneUseCase(phoneOutputPortMongo);
         } else {
             throw new InvalidOptionException("Invalid database option: " + dbOption);
         }

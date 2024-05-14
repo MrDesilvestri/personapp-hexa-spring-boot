@@ -1,16 +1,17 @@
 package co.edu.javeriana.as.personapp.terminal.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
-@NoArgsConstructor
+@Getter
+@Setter
+@Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class PersonaModelCli {
-	private Integer cc;
-	private String nombre;
-	private String apellido;
-	private String genero;
-	private Integer edad;
+    private Integer cc;
+    private String nombre;
+    private String apellido;
+    private String genero;
+    private int edad;
+
 }

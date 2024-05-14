@@ -11,9 +11,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SpringBootApplication
 public class PersonAppCli implements CommandLineRunner {
-	
+
+	private final MenuPrincipal menuPrincipal;
+
 	@Autowired
-	private MenuPrincipal menuPrincipal;
+	public PersonAppCli(MenuPrincipal menuPrincipal) {
+		this.menuPrincipal = menuPrincipal;
+	}
 
 	public static void main(String[] args) {
 		log.info("Starting PersonAppCli ...");

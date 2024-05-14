@@ -21,11 +21,15 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 public class PersonOutputAdapterMaria implements PersonOutputPort {
 
-	@Autowired
-	private PersonaRepositoryMaria personaRepositoryMaria;
+	private final PersonaRepositoryMaria personaRepositoryMaria;
+
+	private final PersonaMapperMaria personaMapperMaria;
 
 	@Autowired
-	private PersonaMapperMaria personaMapperMaria;
+	public PersonOutputAdapterMaria(PersonaRepositoryMaria personaRepositoryMaria, PersonaMapperMaria personaMapperMaria) {
+		this.personaRepositoryMaria = personaRepositoryMaria;
+		this.personaMapperMaria = personaMapperMaria;
+	}
 
 	@Override
 	public Person save(Person person) {

@@ -1,5 +1,10 @@
 package co.edu.javeriana.as.personapp.mariadb.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -17,8 +22,12 @@ import javax.persistence.NamedQuery;
  *
  * @author aasanchez
  */
+@Setter
+@Getter
 @Entity
-@Table(name="persona", catalog = "persona_db", schema = "")
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name="persona", catalog = "persona_db", schema = "persona_db")
 @NamedQueries({ @NamedQuery(name = "PersonaEntity.findAll", query = "SELECT p FROM PersonaEntity p"),
 		@NamedQuery(name = "PersonaEntity.findByCc", query = "SELECT p FROM PersonaEntity p WHERE p.cc = :cc"),
 		@NamedQuery(name = "PersonaEntity.findByNombre", query = "SELECT p FROM PersonaEntity p WHERE p.nombre = :nombre"),
@@ -44,11 +53,11 @@ public class PersonaEntity implements Serializable {
 	private Integer edad;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "duenio")
 	private List<TelefonoEntity> telefonos;
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "persona")
 	private List<EstudiosEntity> estudios;
 
-	public PersonaEntity() {
-	}
+
 
 	public PersonaEntity(Integer cc) {
 		this.cc = cc;
@@ -61,63 +70,7 @@ public class PersonaEntity implements Serializable {
 		this.genero = genero;
 	}
 
-	public Integer getCc() {
-		return cc;
-	}
-
-	public void setCc(Integer cc) {
-		this.cc = cc;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public String getApellido() {
-		return apellido;
-	}
-
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
-	}
-
-	public Character getGenero() {
-		return genero;
-	}
-
-	public void setGenero(Character genero) {
-		this.genero = genero;
-	}
-
-	public Integer getEdad() {
-		return edad;
-	}
-
-	public void setEdad(Integer edad) {
-		this.edad = edad;
-	}
-
-	public List<TelefonoEntity> getTelefonos() {
-		return telefonos;
-	}
-
-	public void setTelefonos(List<TelefonoEntity> telefonoList) {
-		this.telefonos = telefonoList;
-	}
-
-	public List<EstudiosEntity> getEstudios() {
-		return estudios;
-	}
-
-	public void setEstudios(List<EstudiosEntity> estudiosList) {
-		this.estudios = estudiosList;
-	}
-
-	@Override
+    @Override
 	public int hashCode() {
 		int hash = 0;
 		hash += (cc != null ? cc.hashCode() : 0);
@@ -131,11 +84,8 @@ public class PersonaEntity implements Serializable {
 			return false;
 		}
 		PersonaEntity other = (PersonaEntity) object;
-		if ((this.cc == null && other.cc != null) || (this.cc != null && !this.cc.equals(other.cc))) {
-			return false;
-		}
-		return true;
-	}
+        return (this.cc != null || other.cc == null) && (this.cc == null || this.cc.equals(other.cc));
+    }
 
 	@Override
 	public String toString() {
