@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 
 import com.mongodb.MongoWriteException;
 
@@ -19,12 +20,12 @@ import lombok.extern.slf4j.Slf4j;
 @Adapter("personOutputAdapterMongo")
 public class PersonOutputAdapterMongo implements PersonOutputPort {
 
-    private final PersonaRepositoryMongo personaRepositoryMongo;
+	private final PersonaRepositoryMongo personaRepositoryMongo;
 
 	private final PersonaMapperMongo personaMapperMongo;
 
 	@Autowired
-	public PersonOutputAdapterMongo(PersonaRepositoryMongo personaRepositoryMongo, PersonaMapperMongo personaMapperMongo) {
+	public PersonOutputAdapterMongo(PersonaRepositoryMongo personaRepositoryMongo, @Lazy PersonaMapperMongo personaMapperMongo) {
 		this.personaRepositoryMongo = personaRepositoryMongo;
 		this.personaMapperMongo = personaMapperMongo;
 	}
@@ -38,7 +39,7 @@ public class PersonOutputAdapterMongo implements PersonOutputPort {
 		} catch (MongoWriteException e) {
 			log.warn(e.getMessage());
 			return person;
-		}		
+		}
 	}
 
 	@Override

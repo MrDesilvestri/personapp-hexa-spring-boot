@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 
 import co.edu.javeriana.as.personapp.common.annotations.Mapper;
 import co.edu.javeriana.as.personapp.domain.Profession;
@@ -14,9 +15,13 @@ import co.edu.javeriana.as.personapp.mongo.document.ProfesionDocument;
 
 @Mapper
 public class ProfesionMapperMongo {
-	
+
+	private final EstudiosMapperMongo estudiosMapperMongo;
+
 	@Autowired
-	private EstudiosMapperMongo estudiosMapperMongo;
+	public ProfesionMapperMongo(@Lazy EstudiosMapperMongo estudiosMapperMongo) {
+		this.estudiosMapperMongo = estudiosMapperMongo;
+	}
 
 	public ProfesionDocument fromDomainToAdapter(Profession profession) {
 		ProfesionDocument profesionDocument = new ProfesionDocument();
@@ -33,8 +38,8 @@ public class ProfesionMapperMongo {
 
 	private List<EstudiosDocument> validateEstudios(List<Study> studies) {
 		return studies != null && !studies.isEmpty() ? studies.stream()
-				.map(study -> estudiosMapperMongo.fromDomainToAdapter(study)).collect(Collectors.toList())
-				: new ArrayList<EstudiosDocument>();
+				.map(estudiosMapperMongo::fromDomainToAdapter).collect(Collectors.toList())
+				: new ArrayList<>();
 	}
 
 	public Profession fromAdapterToDomain(ProfesionDocument profesionDocument) {
@@ -52,7 +57,7 @@ public class ProfesionMapperMongo {
 
 	private List<Study> validateStudies(List<EstudiosDocument> estudiosDocument) {
 		return estudiosDocument != null && !estudiosDocument.isEmpty() ? estudiosDocument.stream()
-				.map(estudio -> estudiosMapperMongo.fromAdapterToDomain(estudio)).collect(Collectors.toList())
-				: new ArrayList<Study>();
+				.map(estudiosMapperMongo::fromAdapterToDomain).collect(Collectors.toList())
+				: new ArrayList<>();
 	}
 }

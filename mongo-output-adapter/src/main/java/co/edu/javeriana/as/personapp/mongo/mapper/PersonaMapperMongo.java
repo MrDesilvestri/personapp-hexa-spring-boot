@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 
 import co.edu.javeriana.as.personapp.common.annotations.Mapper;
 import co.edu.javeriana.as.personapp.domain.Gender;
@@ -24,7 +25,7 @@ public class PersonaMapperMongo {
 	private final TelefonoMapperMongo telefonoMapperMongo;
 
 	@Autowired
-	public PersonaMapperMongo(EstudiosMapperMongo estudiosMapperMongo, TelefonoMapperMongo telefonoMapperMongo) {
+	public PersonaMapperMongo(@Lazy EstudiosMapperMongo estudiosMapperMongo, @Lazy TelefonoMapperMongo telefonoMapperMongo) {
 		this.estudiosMapperMongo = estudiosMapperMongo;
 		this.telefonoMapperMongo = telefonoMapperMongo;
 	}

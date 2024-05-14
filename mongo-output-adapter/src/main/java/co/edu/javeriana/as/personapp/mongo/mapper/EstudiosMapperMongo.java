@@ -3,6 +3,7 @@ package co.edu.javeriana.as.personapp.mongo.mapper;
 import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 
 import co.edu.javeriana.as.personapp.common.annotations.Mapper;
 import co.edu.javeriana.as.personapp.domain.Person;
@@ -17,11 +18,10 @@ import lombok.NonNull;
 public class EstudiosMapperMongo {
 
 	private final PersonaMapperMongo personaMapperMongo;
-
 	private final ProfesionMapperMongo profesionMapperMongo;
 
 	@Autowired
-	public EstudiosMapperMongo(PersonaMapperMongo personaMapperMongo, ProfesionMapperMongo profesionMapperMongo) {
+	public EstudiosMapperMongo(@Lazy PersonaMapperMongo personaMapperMongo, @Lazy ProfesionMapperMongo profesionMapperMongo) {
 		this.personaMapperMongo = personaMapperMongo;
 		this.profesionMapperMongo = profesionMapperMongo;
 	}
@@ -62,7 +62,7 @@ public class EstudiosMapperMongo {
 		study.setProfession(profesionMapperMongo.fromAdapterToDomain(estudiosDocument.getPrimaryProfesion()));
 		study.setGraduationDate(validateGraduationDate(estudiosDocument.getFecha()));
 		study.setUniversityName(validateUniversityName(estudiosDocument.getUniver()));
-		return null;
+		return study;
 	}
 
 	private LocalDate validateGraduationDate(LocalDate fecha) {
