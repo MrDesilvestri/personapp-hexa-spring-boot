@@ -21,4 +21,8 @@ public class Profession {
 	private String description;
 	@ToString.Exclude
 	private List<Study> studies;
+
+	public Profession(int i) {
+		this.identification = i;
+	}
 }

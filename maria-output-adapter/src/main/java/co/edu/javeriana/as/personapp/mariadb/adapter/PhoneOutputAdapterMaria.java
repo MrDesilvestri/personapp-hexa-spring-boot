@@ -15,10 +15,15 @@ import lombok.extern.slf4j.Slf4j;
 @Adapter("phoneOutputAdapterMaria")
 @Transactional
 public class PhoneOutputAdapterMaria implements PhoneOutputPort{
+
+    private final TelefonoRepositoryMaria repo;
+    private final TelefonoMapperMaria mapper;
+
     @Autowired
-    private TelefonoRepositoryMaria repo;
-    @Autowired
-    private TelefonoMapperMaria mapper;
+    public PhoneOutputAdapterMaria(TelefonoRepositoryMaria repo, TelefonoMapperMaria mapper) {
+        this.repo = repo;
+        this.mapper = mapper;
+    }
 
     @Override
     public Phone save(Phone phone) {

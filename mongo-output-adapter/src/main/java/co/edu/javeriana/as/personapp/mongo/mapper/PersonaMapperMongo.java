@@ -53,13 +53,13 @@ public class PersonaMapperMongo {
 	private List<EstudiosDocument> validateEstudios(List<Study> studies) {
 		return studies != null && !studies.isEmpty() ? studies.stream()
 				.map(estudiosMapperMongo::fromDomainToAdapter).collect(Collectors.toList())
-				: new ArrayList<EstudiosDocument>();
+				: new ArrayList<>();
 	}
 
 	private List<TelefonoDocument> validateTelefonos(List<Phone> phoneNumbers) {
 		return phoneNumbers != null && !phoneNumbers.isEmpty() ? phoneNumbers.stream()
 				.map(telefonoMapperMongo::fromDomainToAdapter).collect(Collectors.toList())
-				: new ArrayList<TelefonoDocument>();
+				: new ArrayList<>();
 	}
 
 	public Person fromAdapterToDomain(PersonaDocument personaDocument) {

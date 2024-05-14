@@ -28,6 +28,10 @@ public class Person {
 	@ToString.Exclude
 	private List<Study> studies;
 
+	public Person(int i) {
+		this.identification = i;
+	}
+
 	public Boolean isValidAge() {
 		return this.age >= 0;
 	}

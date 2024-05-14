@@ -2,7 +2,11 @@ package co.edu.javeriana.as.personapp.model.response;
 
 import co.edu.javeriana.as.personapp.mariadb.entity.PersonaEntity;
 import co.edu.javeriana.as.personapp.model.request.PersonaRequest;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
 public class PersonaResponse extends PersonaRequest{
 	
 	private String status;
@@ -12,16 +16,5 @@ public class PersonaResponse extends PersonaRequest{
 		this.status = status;
 	}
 
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	
-	
-	
 
 }
